@@ -1741,6 +1741,7 @@ General-purpose SQL migration tools are excellent for relational databases. Thei
 | Repair command | ✔ | ✗ | ✗ |
 | Config profiles (YAML) | ✔ | ⚠ env files | ✗ |
 | Secret manager integration | ✔ enterprise | ✗ | ✗ |
+| Schema analyser | ✔ enterprise | ✗ | ✗ |
 | Slack / Teams notifications | ✔ | ✗ | ✗ |
 | Immutable audit log | ✔ enterprise | ⚠ partial | ✗ |
 | Never creates keyspaces | ✔ Terraform-safe | ✗ tries CREATE SCHEMA | ✗ tries CREATE SCHEMA |
