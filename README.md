@@ -2,6 +2,10 @@
   <img src="https://www.cassachange.com/logo3.png" alt="cassachange" width="200"/>
 </p>
 
+<p>
+Website: https://www.cassachange.com
+</p>
+
 ### Purpose-built CQL migration tool for Apache Cassandra, DataStax AstraDB, ScyllaDB, Azure Managed Cassandra, and Amazon Keyspaces
 
 ## Installation
