@@ -1,4 +1,4 @@
-<p>
+<p style="background-color: #2b2b2b; padding: 20px; display: inline-block;">
   <img src="https://www.cassachange.com/logo3.png" alt="cassachange" width="200"/>
 </p>
 
