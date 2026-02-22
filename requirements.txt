@@ -1,0 +1,6 @@
+# Required
+cassandra-driver>=3.25
+pyyaml>=6.0
+
+# Enterprise features (secret managers, audit log):
+# pip install cassachange-enterprise
