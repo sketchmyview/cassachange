@@ -1,0 +1,149 @@
+# cassachange.yml
+# Cassandra schema migration tool — full configuration reference
+
+profiles:
+  dev:
+    hosts:
+      - host.docker.internal
+    port: 9042
+    username: cassandra
+    password: cassandra
+
+    # secrets_provider: azure-keyvault
+    # secrets:
+    #   astra_token:           akv://data-harbour-dbr-kv/astra-org-token
+    #   secure_connect_bundle: akv://data-harbour-dbr-kv/astra-scb-zip-cs-b64
+    keyspaces:
+      - my_keyspace
+      - ks_demo_1
+    history_keyspace: ks_migrations
+
+  staging:
+    hosts: [cassandra-staging.internal]
+    keyspace: myapp_staging
+    history_keyspace: myapp_migrations_staging
+    timeout: 60
+    notifications:
+      on_events: [deploy_failed, rollback_failed, script_failed]
+      channels:
+        - type: slack
+          webhook_url_env: SLACK_WEBHOOK_URL_STAGING
+
+  prod:
+    hosts:
+      - cass1.prod.internal
+      - cass2.prod.internal
+      - cass3.prod.internal
+    keyspace: myapp_prod
+    history_keyspace: myapp_migrations_prod
+    timeout: 120
+    notifications:
+      on_events:
+        - deploy_success
+        - deploy_failed
+        - rollback_success
+        - rollback_failed
+        - script_failed
+      channels:
+        - type: slack
+          webhook_url_env: SLACK_WEBHOOK_URL_PROD
+        - type: webhook
+          url: https://ops.example.com/hooks/cassachange
+          headers:
+            Authorization: "Bearer ${OPS_WEBHOOK_TOKEN}"
+          timeout: 10
+
+# ---------------------------------------------------------------------------
+# Notifications (top-level, applies to all profiles unless overridden)
+# ---------------------------------------------------------------------------
+# notifications:
+#   on_events:                # omit to fire on every event
+#     - deploy_success
+#     - deploy_failed
+#     - rollback_success
+#     - rollback_failed
+#     - script_failed
+#
+#   channels:
+#     # Slack (Block Kit)
+#     - type: slack
+#       webhook_url_env: SLACK_WEBHOOK_URL        # read from env var
+#       # webhook_url: https://hooks.slack.com/services/T.../B.../xxx
+#
+#     # Microsoft Teams (Adaptive Card)
+#     - type: teams
+#       webhook_url_env: TEAMS_WEBHOOK_URL
+#
+#     # Generic HTTP webhook — sends full JSON payload
+#     - type: webhook
+#       url: https://ops.example.com/hooks/cassachange
+#       method: POST
+#       timeout: 10
+#       headers:
+#         Authorization: "Bearer ${NOTIFY_TOKEN}"  # ${ENV_VAR} substitution
+#         X-Source: cassachange
+
+# ---------------------------------------------------------------------------
+# Secret management (optional — pull credentials from Vault / AWS at runtime)
+# ---------------------------------------------------------------------------
+# secrets_provider: vault               # or: aws-ssm | aws-secrets-manager
+# secrets:
+#   password:    vault://secret/myapp/cassandra#db_password
+#   astra_token: vault://secret/myapp/astra#token
+#
+# secrets_provider: aws-ssm
+# secrets:
+#   password:    ssm:///myapp/prod/cassandra/password
+#   astra_token: ssm:///myapp/prod/astra/token
+#
+# secrets_provider: aws-secrets-manager
+# secrets:
+#   password:    asm://myapp/cassandra-creds#password
+#   astra_token: asm://myapp/astra-creds#token
+#
+# secrets_provider: azure-keyvault
+# secrets:
+#   # ── Plain string secrets (value injected directly) ──────────────────────
+#   password:              akv://my-vault/cassandra-password
+#   astra_token:           akv://my-vault/astra-token
+#   # JSON secret with key extraction:
+#   # password:            akv://my-vault/cassandra-creds#password
+#   # Specific version:
+#   # password:            akv://my-vault/cassandra-password@abc123def456
+#
+#   # ── File secrets (base64 content → temp file → path injected) ───────────
+#   # Enterprises store cert/key/SCB file contents base64-encoded in the vault
+#   # rather than deploying files to CI runners. cassachange detects these
+#   # keys automatically, decodes the content, writes a chmod-600 temp file,
+#   # and passes the path to the Cassandra driver transparently.
+#   # Temp files are deleted after the session is built (try/finally).
+#   #
+#   secure_connect_bundle: akv://my-vault/astra-scb-zip-b64
+#   ssl_cafile:            akv://my-vault/cassandra-ca-cert-b64
+#   ssl_certfile:          akv://my-vault/cassandra-client-cert-b64
+#   ssl_keyfile:           akv://my-vault/cassandra-client-key-b64
+#
+#   # How to store a file in Azure Key Vault (one-time setup):
+#   #   base64 -w 0 secure-connect.zip | az keyvault secret set \
+#   #     --vault-name my-vault --name astra-scb-zip-b64 --file /dev/stdin
+#   #   base64 -w 0 ca.crt | az keyvault secret set \
+#   #     --vault-name my-vault --name cassandra-ca-cert-b64 --file /dev/stdin
+#   #
+#   # Same pattern works with vault://, ssm://, and asm:// providers.
+#
+# URI formats:
+#   vault://PATH#KEY              Vault KV v2 path + specific JSON key
+#   ssm:///PARAM                  SSM SecureString (decrypted automatically)
+#   asm://NAME#KEY                ASM JSON secret + specific key
+#   akv://VAULT/SECRET            Azure Key Vault — latest version
+#   akv://VAULT/SECRET#KEY        Azure Key Vault — JSON secret, extract key
+#   akv://VAULT/SECRET@VERSION    Azure Key Vault — specific secret version
+#
+# Required env vars:
+#   Vault: VAULT_ADDR, VAULT_TOKEN (or VAULT_ROLE_ID + VAULT_SECRET_ID)
+#   AWS:   AWS_REGION  (plus standard boto3 credential chain)
+#   Azure: DefaultAzureCredential — tries in order:
+#            AZURE_CLIENT_ID + AZURE_CLIENT_SECRET + AZURE_TENANT_ID (service principal)
+#            Managed Identity (AKS, VMs, App Service, ACI)
+#            Azure CLI (az login) — good for local dev
+#          Optionally: AZURE_KEYVAULT_URL (override for sovereign clouds)

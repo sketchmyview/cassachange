@@ -1,0 +1,24 @@
+# cassachange — Python dependencies for Docker image
+# Pin minor versions for reproducible builds; patch updates are safe.
+
+# Core driver — supports Apache Cassandra, AstraDB, ScyllaDB, Azure, Keyspaces
+cassandra-driver>=3.25,<4.0
+
+# Config parsing
+PyYAML>=6.0,<7.0
+
+# cassachange itself — install from PyPI
+cassachange==1.0.0
+
+# Optional: enterprise secret manager dependencies
+# Uncomment whichever providers you need, or install cassachange-enterprise[all]
+#
+# HashiCorp Vault
+# hvac>=1.0,<2.0
+#
+# AWS SSM / Secrets Manager
+# boto3>=1.26,<2.0
+#
+# Azure Key Vault
+# azure-keyvault-secrets>=4.7,<5.0
+# azure-identity>=1.15,<2.0
