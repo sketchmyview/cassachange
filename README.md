@@ -628,7 +628,7 @@ cassachange baseline \
 # Generates: V1.0.0__baseline_myapp.cql
 ```
 
-### analyse
+### analyse (paid)
 
 Inspect a live keyspace schema for anti-patterns, hotspot risks, and index problems. Runs 23 rules across 5 categories and produces a scored report per table and overall keyspace. Reads from `system_schema` only — no writes, no side effects.
 
