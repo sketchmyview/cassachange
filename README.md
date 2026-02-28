@@ -89,16 +89,15 @@ cassachange ships as two separate Python packages. Enterprise installs on top of
 | GitHub Actions workflow included | ✔ | ✔ |
 | **Secret manager integration** (Vault / AWS SSM / AWS Secrets Manager / Azure Key Vault) | ✘ | ✔ |
 | **File secrets** (SSL certs, AstraDB SCB stored in vault as base64) | ✘ | ✔ |
-| **Schema analyser** (`cassachange analyse`) — 23 rules, 5 categories | ✘ | ✔ |
-| **Immutable audit log** + `cassachange audit` command | ✘ | ✔ |
-| **monitor** — live table health snapshots | ✔ | ✔ |
-| **analyse** — 23-rule schema analyser | ✔ | ✔ |
-| **diff** — keyspace schema diff | ✔ | ✔ |
-| **generate** — migration script from diff | ✔ | ✔ |
-| **seed** — schema-aware test data seeder | ✔ | ✔ |
-| **dashboard** — CI/CD analytics HTML report | ✔ | ✔ |
-| **contract** — schema contract enforcement | ✔ | ✔ |
-| **capacity** — growth projection engine | ✔ | ✔ |
+| 23 rules, 5 categories | ✘ | ✔ |
+| **Immutable audit log** | ✘ | ✔ |
+| live table health snapshots | ✘ | ✔ |
+| keyspace schema diff | ✘ | ✔ |
+| migration script from diff | ✘ | ✔ |
+| chema-aware test data seeder | ✘ | ✔ |
+| CI/CD analytics HTML report | ✘ | ✔ |
+| schema contract enforcement | ✘ | ✔ |
+| growth projection engine | ✘ | ✔ |
 | Priority support (additional) | ✘ | ✔ |
 
 If a `secrets` or `secrets_provider` block is present in `cassachange.yml` and the enterprise package is **not** installed, cassachange exits immediately before connecting to Cassandra:
