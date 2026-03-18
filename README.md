@@ -303,10 +303,10 @@ A__grant_service_account_roles.cql
 
 | Script type | `deploy` | `rollback` |
 |---|---|---|
-| `V__` versioned | ✔ pending only | ✔ via paired `U__` |
-| `U__` undo | — | ✔ |
-| `R__` repeatable | ✔ if checksum changed | — |
-| `A__` always | ✔ unconditionally | — |
+| `V__` versioned | ✓ pending only | ✓ via paired `U__` |
+| `U__` undo | — | ✓ |
+| `R__` repeatable | ✓ if checksum changed | — |
+| `A__` always | ✓ unconditionally | — |
 
 ---
 
@@ -693,9 +693,9 @@ profiles:
 
 | Operation | Supported |
 |---|---|
-| `CREATE TABLE IF NOT EXISTS` | ✔ |
-| `ALTER TABLE ADD column` | ✔ |
-| `CREATE INDEX` | ✔ (on supported column types) |
+| `CREATE TABLE IF NOT EXISTS` | ✓ |
+| `ALTER TABLE ADD column` | ✓ |
+| `CREATE INDEX` | ✓ (on supported column types) |
 | `DROP TABLE` | ✗ |
 | `ALTER TABLE DROP COLUMN` | ✗ |
 | `TRUNCATE` | ✗ |
@@ -1108,27 +1108,27 @@ General-purpose SQL migration tools are excellent for relational databases. Thei
 
 | Feature | cassachange | SQL-first tool | Generic migrator |
 |---|:---:|:---:|:---:|
-| Native CQL execution | ✔ cassandra-driver | ⚠ community plugin | ⚠ 3rd-party ext |
-| AstraDB SCB + token auth | ✔ built-in | ✗ | ✗ |
-| ScyllaDB native support | ✔ | ✗ | ✗ |
-| Azure Managed Cassandra | ✔ full + AKV cert fit | ✗ | ✗ |
-| Amazon Keyspaces | ✔ CQL subset supported | ✗ | ✗ |
-| Protocol v4 auto-pin | ✔ | ✗ | ✗ |
-| Rollback (free) | ✔ U__ scripts | ✗ free / ✔ paid | ⚠ DDL only |
-| Rollback on Cassandra DDL | ✔ explicit CQL | ✗ no CQL gen | ✗ no CQL gen |
-| Rollback by tag | ✔ | ✗ | ✗ |
-| Distributed locking | ✔ Cassandra LWT | ✗ | ✗ |
-| Always scripts (A__) | ✔ | ✗ | ✗ |
-| Multi-keyspace deploy | ✔ | ✗ | ✗ |
-| Offline script validation | ✔ | ✗ | ✗ |
-| Dry run to JSON file | ✔ | ⚠ paid only | ⚠ paid only |
-| Baseline from live keyspace | ✔ | ✗ (CQL) | ✗ |
-| Repair command | ✔ | ✗ | ✗ |
-| Config profiles (YAML) | ✔ | ⚠ env files | ✗ |
-| Slack / Teams notifications | ✔ | ✗ | ✗ |
-| Never creates keyspaces | ✔ Terraform-safe | ✗ tries CREATE SCHEMA | ✗ tries CREATE SCHEMA |
+| Native CQL execution | ✓ cassandra-driver | ⚠ community plugin | ⚠ 3rd-party ext |
+| AstraDB SCB + token auth | ✓ built-in | ✗ | ✗ |
+| ScyllaDB native support | ✓ | ✗ | ✗ |
+| Azure Managed Cassandra | ✓ full + AKV cert fit | ✗ | ✗ |
+| Amazon Keyspaces | ✓ CQL subset supported | ✗ | ✗ |
+| Protocol v4 auto-pin | ✓ | ✗ | ✗ |
+| Rollback (free) | ✓ U__ scripts | ✗ free / ✓ paid | ⚠ DDL only |
+| Rollback on Cassandra DDL | ✓ explicit CQL | ✗ no CQL gen | ✗ no CQL gen |
+| Rollback by tag | ✓ | ✗ | ✗ |
+| Distributed locking | ✓ Cassandra LWT | ✗ | ✗ |
+| Always scripts (A__) | ✓ | ✗ | ✗ |
+| Multi-keyspace deploy | ✓ | ✗ | ✗ |
+| Offline script validation | ✓ | ✗ | ✗ |
+| Dry run to JSON file | ✓ | ⚠ paid only | ⚠ paid only |
+| Baseline from live keyspace | ✓ | ✗ (CQL) | ✗ |
+| Repair command | ✓ | ✗ | ✗ |
+| Config profiles (YAML) | ✓ | ⚠ env files | ✗ |
+| Slack / Teams notifications | ✓ | ✗ | ✗ |
+| Never creates keyspaces | ✓ Terraform-safe | ✗ tries CREATE SCHEMA | ✗ tries CREATE SCHEMA |
 | Runtime requirement | Python 3.8+ | JVM (Java 8+) | JVM / Node / Ruby |
-| GitHub Actions included | ✔ | ⚠ manual | ⚠ manual |
+| GitHub Actions included | ✓ | ⚠ manual | ⚠ manual |
 
 **Use cassachange** if your database is Apache Cassandra, DataStax AstraDB, ScyllaDB, Azure Managed Cassandra, or Amazon Keyspaces.
 
