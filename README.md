@@ -167,14 +167,7 @@ pip install cassachange-enterprise[all]
 
 ```bash
 # Community
-pip install cassachange-1.2.0-py3-none-any.whl
-
-# Enterprise
-pip install cassachange-1.2.0-py3-none-any.whl
-pip install cassachange_enterprise-1.2.0-py3-none-any.whl
-
-# Enterprise with azure
-pip install cassachange_enterprise-1.2.0-py3-none-any.whl[azure]
+pip install cassachange-1.0.0-py3-none-any.whl
 ```
 
 ### From source
